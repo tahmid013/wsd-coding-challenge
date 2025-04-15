@@ -35,7 +35,7 @@ public class CertificateUpdate {
         this.askPrice = (double) Math.round(ask_p * 100) / 100;
         this.askSize = random.nextInt(1000, 5001);
         // 2years * 12
-        this.maturityDate = LocalDate.now().minusMonths(random.nextInt(25));
+        this.maturityDate = LocalDate.now().plusMonths(random.nextInt(25));
     }
     private String generateISIN(ThreadLocalRandom random){
         StringBuilder stringBuilder = new StringBuilder();

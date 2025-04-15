@@ -2,6 +2,7 @@ package com.solvians.showcase;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -66,5 +67,39 @@ class CertificateUpdateGeneratorTest {
         assertTrue(decimalLength[1].length() <= 2, "bid price must hold 2 decimal point" );
 
     }
+    @Test
+    void checkAskPrice(){
+        CertificateUpdate certificateUpdate = new CertificateUpdate();
+        Double askPrice = certificateUpdate.getAskPrice();
 
+        assertTrue(askPrice>=100.00 && askPrice <=200.00, "ask price must be between 100.00 and 200.00 inclusive");
+
+        String price = askPrice.toString();
+        String[] decimalLength = price.split("\\.");
+        assertTrue(decimalLength[1].length() <= 2, "Ask price must hold 2 decimal point" );
+
+    }
+
+    @Test
+    void checkBidSize(){
+        CertificateUpdate certificateUpdate = new CertificateUpdate();
+        Integer bidSize = certificateUpdate.getBidSize();
+
+        assertTrue(bidSize>=1000 && bidSize<=5000, "Bid size must be between 1000 and 5000 inclusive");
+    }
+    @Test
+    void checkAskSize(){
+        CertificateUpdate certificateUpdate = new CertificateUpdate();
+        Integer askSize = certificateUpdate.getAskSize();
+
+        assertTrue(askSize>=1000 && askSize<=5000, "Bid size must be between 1000 and 5000 inclusive");
+    }
+    @Test
+    void checkGeneratedMaturityDateWithin2Years(){
+        CertificateUpdate certificateUpdate = new CertificateUpdate();
+        LocalDate maturityDate = certificateUpdate.getMaturityDate();
+
+        assertTrue(maturityDate.isEqual(LocalDate.now()) ||maturityDate.isAfter(LocalDate.now()), "Maturity date should not be in the past");
+        assertTrue(maturityDate.isBefore(LocalDate.now().plusYears(2)), "Maturity date should be within 2 year");
+    }
 }
