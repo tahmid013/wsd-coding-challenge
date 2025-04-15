@@ -2,7 +2,9 @@ package com.solvians.showcase;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -65,21 +67,38 @@ public class CertificateUpdate {
         for(char c = 'A'; c<='Z'; c++){
             this.map.put(c, starter++);
         }
+        starter = 0;
+        for(char c = '0'; c<='9'; c++){
+            this.map.put(c, starter++);
+        }
     }
-    private char getCheckDigit(String orgString){
+    public char getCheckDigit(String orgString){
         int sum = 0;
         int cnt = 0;
+        String test = "";
         // starting from rightmost
+        String manupulatedStr = "";
         for(int i = orgString.length()-1; i>=0 ; i--){
             char c = orgString.charAt(i);
             int val = this.map.get(c);
+            if(val>9){
+                manupulatedStr+=(char)('0'+(val%10));
+                manupulatedStr+=(char)('0'+(val/10));
+            }
+            else{
+                manupulatedStr+=(char)('0'+(val));
+            }
+        }
+        for(int i = 0 ;i<manupulatedStr.length(); i++){
+            int val = manupulatedStr.charAt(i) - '0';
             if(cnt%2 == 0){ // only one after another is multiplied by 2
                 val = val*2;
             }
             if(val>9){
-                sum+=val%10;
+                sum+=(val%10);
                 sum+=(int)(val/10);
-            } else{
+            } else
+            {
                 sum+=val;
             }
             cnt++;

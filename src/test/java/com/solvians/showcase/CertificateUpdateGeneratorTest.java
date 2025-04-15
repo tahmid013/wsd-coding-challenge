@@ -19,6 +19,8 @@ class CertificateUpdateGeneratorTest {
     private static boolean isAlphanumeric(char c) {
         return (c >= 'A' && c <= 'Z') ||(c >= 'a' && c <= 'z') || (c >= '0' && c <= '9');
     }
+    private static String orgString = "DE123456789";
+
     @Test
     public void generateQuotes() {
         CertificateUpdateGenerator certificateUpdateGenerator = new CertificateUpdateGenerator(10, 100);
@@ -101,5 +103,11 @@ class CertificateUpdateGeneratorTest {
 
         assertTrue(maturityDate.isEqual(LocalDate.now()) ||maturityDate.isAfter(LocalDate.now()), "Maturity date should not be in the past");
         assertTrue(maturityDate.isBefore(LocalDate.now().plusYears(2)), "Maturity date should be within 2 year");
+    }
+    @Test
+    void testCheckDigit(){
+        CertificateUpdate certificateUpdate = new CertificateUpdate();
+        char c = certificateUpdate.getCheckDigit(orgString);
+        assertEquals('6', c, "For the String: DE123456789 check digit should be 6");
     }
 }
