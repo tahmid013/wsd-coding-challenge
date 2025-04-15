@@ -54,4 +54,17 @@ class CertificateUpdateGeneratorTest {
         assertTrue(isDigit(isin.charAt(isin.length()-1)), "Last char is not digit");
     }
     // add remaining tests
+    @Test
+    void checkBidPrice(){
+        CertificateUpdate certificateUpdate = new CertificateUpdate();
+        Double bidPrice = certificateUpdate.getBidPrice();
+
+        assertTrue(bidPrice>=100.00 && bidPrice <=200.00, "bid price must be between 100.00 and 200.00 inclusive");
+
+        String price = bidPrice.toString();
+        String[] decimalLength = price.split("\\.");
+        assertTrue(decimalLength[1].length() <= 2, "bid price must hold 2 decimal point" );
+
+    }
+
 }

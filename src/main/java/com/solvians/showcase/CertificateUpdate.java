@@ -26,9 +26,13 @@ public class CertificateUpdate {
         // 55 years * 365
         this.timeStamp = LocalDateTime.now().minusDays(random.nextLong(1 + 55 * 365));
         this.isin = generateISIN(random);
-        this.bidPrice = 100.00 + random.nextDouble() * 100.00;
+        double bid_p = 100.00 + random.nextDouble() * 100.00;
+        this.bidPrice = (double) Math.round(bid_p * 100) / 100;
+
         this.bidSize = random.nextInt(1000, 5001);
-        this.askPrice = 100.00 + random.nextDouble() * 100.00;
+
+        double ask_p  = 100.00 + random.nextDouble() * 100.00;
+        this.askPrice = (double) Math.round(ask_p * 100) / 100;
         this.askSize = random.nextInt(1000, 5001);
         // 2years * 12
         this.maturityDate = LocalDate.now().minusMonths(random.nextInt(25));
